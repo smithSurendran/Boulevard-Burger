@@ -1,6 +1,6 @@
 "use client";
 import { ORDER_LINKS } from "@/data/ordering";
-import { Bike, ShoppingBag, Store, ExternalLink } from "lucide-react";
+import { Bike, ShoppingBag, Store } from "lucide-react";
 
 const partners = [
   { key: "doordash",  label: "DoorDash",  icon: Bike,         bg: "bg-[#EB1700]/85" },
@@ -14,7 +14,7 @@ export default function PartnerButtons({ disabled = false }: { disabled?: boolea
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {partners.map(p => {
-        const href = (ORDER_LINKS as any)[p.key] as string | undefined;
+        const href = ORDER_LINKS[p.key];
         if (!href) return null;
         const Icon = p.icon;
         return (
