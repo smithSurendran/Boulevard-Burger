@@ -1,6 +1,6 @@
-import Header from "@/component/Header";
-import Footer from "@/component/Footer";
-import ContactForm from "@/component/ContactForm";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import ContactForm from "@/components/ContactForm";
 import Link from "next/link";
 import { PICKUP_INFO } from "@/data/ordering";
 

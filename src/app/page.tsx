@@ -1,7 +1,7 @@
-import Header from "../component/Header";
-import Hero from "../component/Hero";
-import MenuGrid from "../component/MenuGrid";
-import Footer from "../component/Footer";
+import Header from "../components/Header";
+import Hero from "../components/Hero";
+import MenuGrid from "../components/MenuGrid";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (

@@ -1,7 +1,7 @@
-import Header from "@/component/Header";
-import Footer from "@/component/Footer";
-import MenuGrid from "@/component/MenuGrid";
-import AddOns from "@/component/AddOns";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import MenuGrid from "@/components/MenuGrid";
+import AddOns from "@/components/AddOns";
 
 export const metadata = {
   title: "Menu • Boulevard Burger",

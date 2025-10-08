@@ -1,6 +1,6 @@
-import Header from "@/component/Header";
-import Footer from "@/component/Footer";
-import PartnerButtons from "@/component/PartnerButtons";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import PartnerButtons from "@/components/PartnerButtons";
 import { PICKUP_INFO } from "@/data/ordering";
 import Link from "next/link";
 import { isOpenNow } from "@/lib/hours";
