@@ -7,7 +7,7 @@ import { useCart } from '@/lib/useCart'
 export default function Header() {
   const { cart } = useCart()
   return (
-    <header className="sticky top-0 z-50 bg-bb-paper/90 backdrop-blur border-b">
+    <header className="sticky top-0 z-50 bg-bb-paper/95 backdrop-blur border-b border-neutral-200 shadow-sm">
       <div className="mx-auto max-w-7xl h-20 px-4 grid grid-cols-[auto_1fr_auto] items-center gap-4">
         <Link href="/" aria-label="Boulevard Burger home" className="flex items-center">
           {/* subtle curve + proper clipping */}
@@ -15,8 +15,8 @@ export default function Header() {
             <Image
               src="/brand/logo.jpg"     // or .jpg
               alt="BLVD Burger & Grill"
-              width={240}
-              height={72}
+              width={260}
+              height={80}
               priority
               className="h-12 md:h-14 w-auto object-contain"
             />
@@ -24,11 +24,11 @@ export default function Header() {
         </Link>
 
         <nav className="hidden md:flex justify-center items-center gap-9 heading-smash text-base md:text-[17px] lg:text-[18px]">
-          <Link href="/menu" className="hover:text-bb-fire">Menu</Link>
-          <Link href="/order" className="hover:text-bb-fire">Order</Link>
-          <Link href="/catering" className="hover:text-bb-fire">Catering</Link>
-          <Link href="/about" className="hover:text-bb-fire">About</Link>
-          <Link href="/contact" className="hover:text-bb-fire">Contact</Link>
+          <Link href="/menu" className="font-semibold tracking-wide hover:text-bb-fire transition-colors">Menu</Link>
+          <Link href="/order" className="font-semibold tracking-wide hover:text-bb-fire transition-colors">Order</Link>
+          <Link href="/catering" className="font-semibold tracking-wide hover:text-bb-fire transition-colors">Catering</Link>
+          <Link href="/about" className="font-semibold tracking-wide hover:text-bb-fire transition-colorshover:text-bb-fire">About</Link>
+          <Link href="/contact" className="font-semibold tracking-wide hover:text-bb-fire transition-colors:text-bb-fire">Contact</Link>
         </nav>
 
         <div className="flex items-center gap-4">
@@ -45,7 +45,7 @@ export default function Header() {
           {/* Order Now Button */}
           <Link
             href="/order"
-            className="heading-smash tracking-[.06em] rounded-full px-6 py-3 text-base md:text-lg bg-bb-fire text-white hover:opacity-90"
+            className="heading-smash font-bold tracking-wide rounded-full px-7 py-3.5 text-base md:text-lg bg-bb-fire text-white hover:scale-105 hover:shadow-md transition-transform duration-200"
           >
             Order Now
           </Link>

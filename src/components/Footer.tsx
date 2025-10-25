@@ -1,26 +1,57 @@
+"use client";
 import Image from "next/image";
+import Link from "next/link";
+import { Instagram, Music2 } from "lucide-react"; // TikTok substitute
 
 export default function Footer() {
   return (
-    <footer className="mt-20 border-t">
-      <div className="mx-auto max-w-6xl px-4 py-10 grid gap-8 md:grid-cols-3 text-sm">
+    <footer className="bg-[#C94C4C] text-white mt-20">
+      <div className="mx-auto max-w-6xl px-6 py-12 grid gap-10 md:grid-cols-3 text-center md:text-left">
+        
+        {/* Left Section */}
         <div>
-          <div className="inline-flex h-10 overflow-hidden rounded-[8px] mb-4">
-            <Image src="/brand/logo.jpg" alt="Boulevard Burger" width={160} height={40} className="h-10 w-auto object-contain" />
+          <div className="inline-flex h-12 overflow-hidden rounded-lg mb-4">
+            <Image
+              src="/brand/logo.jpg"
+              alt="Boulevard Burger"
+              width={180}
+              height={45}
+              className="h-12 w-auto object-contain"
+            />
           </div>
-          <p className="text-neutral-600">Stacked high. Smashed right.</p>
+          <p className="text-white/80">Stacked high. Smashed right.</p>
         </div>
+
+        {/* Middle Section */}
         <div>
-          <h4 className="font-semibold mb-2">Hours</h4>
-          <p>Mon–Sun: 11am–10pm</p>
+          <h4 className="font-semibold mb-3 uppercase tracking-widest text-sm">Visit Us</h4>
+          <p className="text-white/80">Mon–Sun: 11am–10pm</p>
+          <p className="text-white/80 mt-2">hello@boulevardburger.com</p>
         </div>
-        <div>
-          <h4 className="font-semibold mb-2">Contact</h4>
-          <p>hello@boulevardburger.com</p>
+
+        {/* Right Section */}
+        <div className="flex flex-col items-center md:items-end space-y-4">
+          <Link
+            href="/order"
+            className="bg-black hover:bg-neutral-800 text-white font-semibold rounded-full px-8 py-3 transition"
+          >
+            ORDER NOW
+          </Link>
+
+          <div className="flex space-x-5">
+            <Link href="https://instagram.com" target="_blank" aria-label="Instagram">
+              <Instagram size={22} />
+            </Link>
+            <Link href="https://tiktok.com" target="_blank" aria-label="TikTok">
+              <Music2 size={22} />
+            </Link>
+          </div>
         </div>
       </div>
-      <div className="text-center text-xs text-neutral-500 py-4">
-        © {new Date().getFullYear()} Boulevard Burger
+
+      {/* Bottom Section */}
+      <div className="border-t border-white/20 py-4 text-center text-xs text-white/70">
+        © {new Date().getFullYear()} Boulevard Burger — All rights reserved.
       </div>
     </footer>
   );

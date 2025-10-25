@@ -11,7 +11,7 @@ export const metadata = {
 };
 
 export default function OrderPage() {
-    const open = isOpenNow();
+    const open = true;
   return (
     <>
       <Header />
