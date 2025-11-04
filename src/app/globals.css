@@ -1,4 +1,6 @@
 /* Tailwind CSS v4 */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fredoka+One&display=swap');
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -6,18 +8,17 @@
 
 /* Boulevard Burger Theme */
 @theme {
-  --color-bb-ink:   #000000;
-  --color-bb-green: #204D33;
-  --color-bb-sage:  #8AAD94;
-  --color-bb-fire:  #DC6B10;
-  --color-bb-paper: #F3F4F1;
+  --color-bb-red:   #FF3B3B;  /* Primary diner red */
+  --color-bb-black: #000000;
+  --color-bb-white: #FFFFFF;
+  --color-bb-paper: #F5F5F5;  /* soft gray background */
 
-  --shadow-card: 0 10px 25px rgba(0,0,0,0.10);
+  --shadow-card: 4px 4px 0 #000000; /* retro black drop shadow */
   --radius-xl: 1rem;
-  --radius-2xl: 1.25rem;
+  --radius-2xl: 1.5rem;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans";
-  --font-display: var(--font-poppins), var(--font-inter), ui-sans-serif, system-ui;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui;
+  --font-display: "Bebas Neue", "Fredoka One", ui-sans-serif;
 }
 
 /* Global base style */
@@ -62,6 +63,17 @@
   text-transform: uppercase;
   letter-spacing: .06em; /* slightly wider, Smash-like */
 }
+
+.heading-diner {
+  font-family: "Bebas Neue", sans-serif;
+  color: var(--color-bb-red);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 3px solid var(--color-bb-black);
+  padding-bottom: 0.25rem;
+  display: inline-block;
+}
+
 
 @theme inline {
   --radius-sm:   calc(var(--radius) - 4px);
@@ -139,7 +151,29 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-[var(--color-bb-paper)] text-[var(--color-bb-black)];
+    font-family: "Fredoka One", cursive;
+  }
+
+  h1, h2, h3 {
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  button {
+    background-color: var(--color-bb-red);
+    color: var(--color-bb-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    transition: all 0.2s ease-in-out;
+  }
+
+  button:hover {
+    background-color: var(--color-bb-black);
+    color: var(--color-bb-white);
+    transform: scale(1.05);
   }
 }

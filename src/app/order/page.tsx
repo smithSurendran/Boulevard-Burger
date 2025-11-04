@@ -6,12 +6,12 @@ import Link from "next/link";
 import { isOpenNow } from "@/lib/hours";
 
 export const metadata = {
-  title: "Order • Boulevard Burger",
+  title: "Order \u2014 Boulevard Burger",
   description: "Order Boulevard Burger for delivery or pickup.",
 };
 
 export default function OrderPage() {
-    const open = true;
+  const open = true;
   return (
     <>
       <Header />
@@ -19,10 +19,11 @@ export default function OrderPage() {
         {/* Hero-ish heading */}
         <section className="mb-2 flex items-center gap-3">
           <h1 className="text-3xl md:text-4xl font-extrabold">Order Now</h1>
-          <span className={`text-xs px-2.5 py-1 rounded-full border
-            ${open ? "border-green-600 text-green-700 bg-green-50"
-                   : "border-neutral-400 text-neutral-600 bg-neutral-50"}`}>
-            {open ? "Open now" : "Closed — opens 11am"}
+          <span
+            className={`text-xs px-2.5 py-1 rounded-full border
+            ${open ? "border-green-600 text-green-700 bg-green-50" : "border-neutral-400 text-neutral-600 bg-neutral-50"}`}
+          >
+            {open ? "Open now" : "Closed \u2014 opens 11am"}
           </span>
         </section>
 
@@ -39,7 +40,12 @@ export default function OrderPage() {
             <h2 className="text-xl font-bold mb-2">Pickup</h2>
             <p className="text-neutral-700">{PICKUP_INFO.instructions}</p>
             <div className="mt-4 space-y-1 text-sm">
-              <div><span className="font-semibold">Address:</span> <Link href={PICKUP_INFO.mapUrl} className="underline hover:text-bb-fire" target="_blank">{PICKUP_INFO.address}</Link></div>
+              <div>
+                <span className="font-semibold">Address:</span>{' '}
+                <Link href={PICKUP_INFO.mapUrl} className="underline hover:text-bb-fire" target="_blank">
+                  {PICKUP_INFO.address}
+                </Link>
+              </div>
               <div><span className="font-semibold">Phone:</span> {PICKUP_INFO.phone}</div>
               <div><span className="font-semibold">Hours:</span> {PICKUP_INFO.hours}</div>
             </div>
@@ -62,3 +68,4 @@ export default function OrderPage() {
     </>
   );
 }
+

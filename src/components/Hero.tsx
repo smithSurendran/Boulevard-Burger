@@ -1,5 +1,3 @@
-
-
 import Link from "next/link";
 import Image from "next/image";
 
@@ -9,38 +7,38 @@ export default function Hero() {
       {/* Background image */}
       <Image
         src="/brand/hero.png"
-        alt=""
+        alt="Boulevard Burger Hero"
         fill
         priority
         sizes="100vw"
         className="absolute inset-0 object-cover opacity-70"
       />
 
-      {/* Readability overlay: darker on the left, fades to clear */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
+      {/* Overlay gradient: deep red → transparent for warmth */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-bb-red)]/80 via-black/60 to-transparent" />
 
       {/* Content */}
       <div className="relative">
         <div className="mx-auto max-w-6xl px-4 py-28 md:py-40">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white drop-shadow">
-            Boulevard <span className="text-bb-fire">Burger</span>
+          <h1 className="text-5xl md:text-7xl font-[var(--font-display)] font-extrabold uppercase tracking-wide text-white drop-shadow-[4px_4px_0_#000]">
+            Boulevard <span className="text-[var(--color-bb-red)]">Burger</span>
           </h1>
-          <p className="mt-4 max-w-xl text-white/90">
-            House-made sauces. Gluten-free buns. Delivery or pickup.
+
+          <p className="mt-6 max-w-xl text-white/90 font-[var(--font-poppins)] text-lg">
+            Stacked high. Smashed right. Always fresh — always Boulevard.
           </p>
 
-          <div className="mt-8 flex gap-3">
+          <div className="mt-10 flex gap-4">
             <Link
               href="/order"
-              className="bg-bb-fire text-white px-5 py-3 rounded-2xl shadow-card hover:opacity-90"
+              className="px-6 py-3 rounded-xl bg-[var(--color-bb-red)] text-white font-[var(--font-poppins)] shadow-[4px_4px_0_#000] hover:bg-[var(--color-bb-black)] transition-transform hover:scale-105"
             >
               Order Now
             </Link>
 
-            {/* Made this filled & blurred so it pops over the photo */}
             <Link
               href="/menu"
-              className="px-5 py-3 rounded-2xl bg-white/90 text-bb-ink border border-white/20 backdrop-blur hover:bg-white"
+              className="px-6 py-3 rounded-xl bg-white/90 text-[var(--color-bb-black)] border border-black/10 backdrop-blur-sm font-[var(--font-poppins)] hover:bg-white hover:scale-105 transition-transform"
             >
               View Menu
             </Link>
@@ -50,31 +48,3 @@ export default function Hero() {
     </section>
   );
 }
-
-// export default function Hero() {
-//   return (
-//     <section className="relative overflow-hidden">
-//       <img
-//         src="/brand/hero.png"
-//         alt=""
-//         className="absolute inset-0 h-full w-full object-cover opacity-70"
-//       />
-//       <div className="relative">
-//         <div className="mx-auto max-w-6xl px-4 py-28 md:py-40">
-//           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">
-//             Boulevard <span className="text-bb-fire">Burger</span>
-//           </h1>
-//           <p className="mt-4 max-w-xl text-lg text-neutral-800">
-//             House-made sauces. Gluten-free buns. Delivery or pickup.
-//           </p>
-//           <div className="mt-8 flex gap-3">
-//             <Link href="/order" className="bg-bb-fire text-white px-5 py-3 rounded-2xl hover:opacity-90">
-//               Order Now
-//             </Link>
-//             <Link href="/menu" className="px-5 py-3 rounded-2xl border">View Menu</Link>
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }

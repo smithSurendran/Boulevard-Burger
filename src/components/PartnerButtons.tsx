@@ -3,10 +3,10 @@ import { ORDER_LINKS } from "@/data/ordering";
 import { Bike, ShoppingBag, Store } from "lucide-react";
 
 const partners = [
-  { key: "doordash",  label: "DoorDash",  icon: Bike,         bg: "bg-[#EB1700]/85" },
+  { key: "doordash",  label: "DoorDash",  icon: Bike,         bg: "bg-[#EB1700]" },
   { key: "ubereats",  label: "Uber Eats", icon: ShoppingBag,  bg: "bg-[#06C167]" },
-  { key: "grubhub",   label: "Grubhub",   icon: Bike,         bg: "bg-[#F63440]/85" },
-  { key: "website",   label: "Order on Our Site", icon: Store, bg: "bg-bb-green" },
+  { key: "grubhub",   label: "Grubhub",   icon: Bike,         bg: "bg-[#EA0029]" },
+  { key: "website",   label: "Order on Our Site", icon: Store, bg: "bg-gradient-to-b from-black to-neutral-900" },
 ] as const;
 
 export default function PartnerButtons({ disabled = false }: { disabled?: boolean }) {
@@ -25,7 +25,7 @@ export default function PartnerButtons({ disabled = false }: { disabled?: boolea
             target={disabled ? undefined : "_blank"}
             rel={disabled ? undefined : "noopener noreferrer"}
             className={`group ${p.bg} text-white rounded-2xl px-4 py-4 flex items-center justify-between shadow-card
-              ${disabled ? "opacity-50 pointer-events-none" : "hover:opacity-95"}`}
+              ${disabled ? "opacity-50 pointer-events-none" : "hover:opacity-95 hover:-translate-y-0.5"} transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
           >
             <span className="flex items-center gap-3 text-base font-semibold">
               <Icon className="h-5 w-5" />

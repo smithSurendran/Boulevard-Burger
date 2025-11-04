@@ -50,8 +50,8 @@ export default function BurgerBuilder() {
       price: 9 + selectedAddons.length * 1
     }
     addItem(item)
-    toast.success('🍔 Added to cart!', {
-    description: 'Your burger has been added to the cart.',
+    toast.success('Added to cart!', {
+      description: 'Your burger has been added to the cart.',
     })
   }
 
@@ -62,7 +62,7 @@ export default function BurgerBuilder() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        🍔 Build Your Own Burger
+        Build Your Own Burger
       </motion.h1>
 
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
@@ -162,7 +162,7 @@ export default function BurgerBuilder() {
 
 }
 
-// 🔹 Reusable Subcomponents
+// Reusable Subcomponents
 const Section = ({ title, icon, children }: { title: string; icon?: React.ReactNode; children: React.ReactNode }) => (
   <div>
     <div className="flex items-center space-x-2 mb-2 text-orange-700">
@@ -179,3 +179,4 @@ const Option = ({ value, label }: { value: string; label: string }) => (
     <Label htmlFor={value}>{label}</Label>
   </div>
 )
+

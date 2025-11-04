@@ -25,7 +25,7 @@ export default function Footer() {
         {/* Middle Section */}
         <div>
           <h4 className="font-semibold mb-3 uppercase tracking-widest text-sm">Visit Us</h4>
-          <p className="text-white/80">Mon–Sun: 11am–10pm</p>
+          <p className="text-white/80">Mon-Sun: 11am-10pm</p>
           <p className="text-white/80 mt-2">hello@boulevardburger.com</p>
         </div>
 
@@ -51,8 +51,9 @@ export default function Footer() {
 
       {/* Bottom Section */}
       <div className="border-t border-white/20 py-4 text-center text-xs text-white/70">
-        © {new Date().getFullYear()} Boulevard Burger — All rights reserved.
+        {"\u00A9"} {new Date().getFullYear()} Boulevard Burger \u2014 All rights reserved.
       </div>
     </footer>
   );
 }
+
