@@ -48,7 +48,7 @@ export default function BurgerBuilder() {
   const [checkingOut, setCheckingOut] = useState(false)
   const burgers = useMemo(
     () => menu.categories.find(c => c.id === 'burgers')?.items ?? [],
-    [menu]
+    []
   )
   const [preset, setPreset] = useState<string | null>(null)
   const [qty, setQty] = useState(1)
