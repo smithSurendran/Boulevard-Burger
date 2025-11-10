@@ -5,7 +5,7 @@ import Link from "next/link";
 import { PICKUP_INFO } from "@/data/ordering";
 
 export const metadata = {
-  title: "Contact • Boulevard Burger",
+  title: "Contact \u2014 Boulevard Burger",
   description: "Reach the Boulevard Burger team.",
 };
 
@@ -31,7 +31,7 @@ export default function ContactPage() {
             <h2 className="text-xl font-bold mb-2">Visit / Pickup</h2>
             <p className="text-sm">
               <span className="font-semibold">Address:</span>{" "}
-              <Link href={PICKUP_INFO.mapUrl} target="_blank" className="underline hover:text-bb-fire">
+              <Link href={PICKUP_INFO.mapUrl} target="_blank" className="underline hover:text-[var(--color-bb-red)]">
                 {PICKUP_INFO.address}
               </Link>
               <br />
@@ -49,3 +49,5 @@ export default function ContactPage() {
     </>
   );
 }
+
+

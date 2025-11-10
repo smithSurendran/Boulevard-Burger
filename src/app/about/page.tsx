@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PICKUP_INFO } from "@/data/ordering";
 
 export const metadata = {
-  title: "About • Boulevard Burger",
+  title: "About — Boulevard Burger",
   description: "Our story, sourcing, and what makes our burgers different.",
 };
 
@@ -16,7 +16,7 @@ export default function AboutPage() {
         <section className="mb-10">
           <h1 className="text-3xl md:text-4xl font-extrabold">About Boulevard Burger</h1>
           <p className="mt-2 text-neutral-700 max-w-2xl">
-            We’re a ghost kitchen built for speed and quality—smashed patties, house-made sauces,
+            We’re a ghost kitchen built for speed and quality — smashed patties, house-made sauces,
             and a menu that travels well. Gluten-free buns and vegan options always on deck.
           </p>
         </section>
@@ -49,7 +49,7 @@ export default function AboutPage() {
             <h3 className="font-semibold mb-1">Where to Find Us</h3>
             <p className="text-sm">
               <span className="font-semibold">Address:</span>{" "}
-              <Link href={PICKUP_INFO.mapUrl} target="_blank" className="underline hover:text-bb-fire">
+              <Link href={PICKUP_INFO.mapUrl} target="_blank" className="underline hover:text-[var(--color-bb-red)]">
                 {PICKUP_INFO.address}
               </Link>
               <br />
@@ -62,7 +62,7 @@ export default function AboutPage() {
             <h3 className="font-semibold mb-1">Contact</h3>
             <p className="text-sm">
               Questions, feedback, or partnerships?{" "}
-              <Link href="/contact" className="underline hover:text-bb-fire">Get in touch</Link>.
+              <Link href="/contact" className="underline hover:text-[var(--color-bb-red)]">Get in touch</Link>.
             </p>
           </div>
         </section>

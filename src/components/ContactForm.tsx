@@ -82,7 +82,7 @@ export default function ContactForm({
       </div>
 
       <div className="flex items-center gap-3">
-        <button type="submit" className="bg-bb-fire text-white px-5 py-3 rounded-2xl shadow-card hover:opacity-90">
+        <button type="submit" className="bg-[var(--color-bb-red)] text-white px-5 py-3 rounded-2xl shadow-card hover:opacity-90">
           {buttonLabel}
         </button>
         {sent && <span className="text-sm text-green-700">Opening your email app…</span>}

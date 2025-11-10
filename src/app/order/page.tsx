@@ -11,7 +11,7 @@ export const metadata = {
 };
 
 export default function OrderPage() {
-  const open = true;
+  const open = isOpenNow();
   return (
     <>
       <Header />
@@ -25,6 +25,15 @@ export default function OrderPage() {
           >
             {open ? "Open now" : "Closed \u2014 opens 11am"}
           </span>
+        </section>
+
+        {/* In-app custom builder CTA */}
+        <section className="mb-8">
+          <h2 className="text-xl font-bold">Build Your Burger</h2>
+          <p className="text-neutral-700 mt-1">Create your own burger and add it to your cart.</p>
+          <Link href="/builder" className="inline-block mt-3 rounded-2xl bg-black text-white px-5 py-2.5 hover:bg-neutral-800">
+            Start Building
+          </Link>
         </section>
 
         <section className="mb-14">
@@ -42,7 +51,7 @@ export default function OrderPage() {
             <div className="mt-4 space-y-1 text-sm">
               <div>
                 <span className="font-semibold">Address:</span>{' '}
-                <Link href={PICKUP_INFO.mapUrl} className="underline hover:text-bb-fire" target="_blank">
+                <Link href={PICKUP_INFO.mapUrl} className="underline hover:text-[var(--color-bb-red)]" target="_blank">
                   {PICKUP_INFO.address}
                 </Link>
               </div>
@@ -68,4 +77,3 @@ export default function OrderPage() {
     </>
   );
 }
-

@@ -1,12 +1,18 @@
+"use client";
+import { useState } from "react";
 import MenuCard from "./MenuCard";
 import { menu, type MenuItem, type MenuCategory } from "@/data/menu";
+import ItemBuilderModal from "./ItemBuilderModal";
 
-export default function MenuGrid({ categoryId }: { categoryId: MenuCategory["id"] }) {
+export default function MenuGrid({ categoryId, badgeFilters = [] }: { categoryId: MenuCategory["id"]; badgeFilters?: string[] }) {
   // Find the correct category from your menu.ts
   const category = menu.categories.find((cat) => cat.id === categoryId);
 
   // TypeScript now knows this is a MenuItem[]
-  const items: MenuItem[] = category ? category.items : [];
+  const itemsAll: MenuItem[] = category ? category.items : [];
+  const items = badgeFilters.length
+    ? itemsAll.filter((i) => badgeFilters.every((b) => i.badges?.includes(b)))
+    : itemsAll;
 
   if (!category) {
     return (
@@ -27,6 +33,8 @@ export default function MenuGrid({ categoryId }: { categoryId: MenuCategory["id"
     );
   }
 
+  const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       {/* Section Title */}
@@ -37,9 +45,11 @@ export default function MenuGrid({ categoryId }: { categoryId: MenuCategory["id"
       {/* Grid of cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {items.map((item: MenuItem) => (
-          <MenuCard key={item.name} item={item} />
+          <MenuCard key={item.name} item={item} onClick={() => setActiveItem(item)} />
         ))}
       </div>
+
+      <ItemBuilderModal open={!!activeItem} item={activeItem} onClose={() => setActiveItem(null)} />
     </div>
   );
 }

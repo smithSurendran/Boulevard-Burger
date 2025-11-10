@@ -17,13 +17,14 @@ export default function PartnerButtons({ disabled = false }: { disabled?: boolea
         const href = ORDER_LINKS[p.key];
         if (!href) return null;
         const Icon = p.icon;
+        const isExternal = typeof href === 'string' && href.startsWith('http');
         return (
           <a
             key={p.key}
             href={disabled ? undefined : href}
             aria-disabled={disabled}
-            target={disabled ? undefined : "_blank"}
-            rel={disabled ? undefined : "noopener noreferrer"}
+            target={disabled || !isExternal ? undefined : "_blank"}
+            rel={disabled || !isExternal ? undefined : "noopener noreferrer"}
             className={`group ${p.bg} text-white rounded-2xl px-4 py-4 flex items-center justify-between shadow-card
               ${disabled ? "opacity-50 pointer-events-none" : "hover:opacity-95 hover:-translate-y-0.5"} transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
           >
