@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export interface BurgerItem {
   id: string
@@ -12,75 +12,118 @@ export interface BurgerItem {
   price: number
 }
 
+const CART_KEY = 'cart'
+const SAVED_KEY = 'saved'
+const CART_EVENT = 'cart-changed'
+const SAVED_EVENT = 'saved-changed'
+
+const readItems = (key: string): BurgerItem[] => {
+  if (typeof window === 'undefined') return []
+  const raw = window.localStorage.getItem(key)
+  return raw ? (JSON.parse(raw) as BurgerItem[]) : []
+}
+
+const writeItems = (key: string, value: BurgerItem[]) => {
+  if (typeof window === 'undefined') return
+  window.localStorage.setItem(key, JSON.stringify(value))
+}
+
+const dispatchSyncEvent = (name: string) => {
+  if (typeof window === 'undefined') return
+  window.dispatchEvent(new Event(name))
+}
+
 export const useCart = () => {
   const [cart, setCart] = useState<BurgerItem[]>([])
   const [saved, setSaved] = useState<BurgerItem[]>([])
 
-  useEffect(() => {
-    const load = () => {
-      try {
-        const stored = localStorage.getItem('cart')
-        if (stored) setCart(JSON.parse(stored))
-        const storedSaved = localStorage.getItem('saved')
-        if (storedSaved) setSaved(JSON.parse(storedSaved))
-      } catch {}
-    }
-    load()
-    const onStorage = (e: StorageEvent) => {
-      if (!e.key || e.key === 'cart' || e.key === 'saved') load()
-    }
-    const onCustom = () => load()
-    window.addEventListener('storage', onStorage)
-    window.addEventListener('cart-changed', onCustom as any)
-    window.addEventListener('saved-changed', onCustom as any)
-    return () => {
-      window.removeEventListener('storage', onStorage)
-      window.removeEventListener('cart-changed', onCustom as any)
-      window.removeEventListener('saved-changed', onCustom as any)
-    }
+  const loadFromStorage = useCallback(() => {
+    setCart(readItems(CART_KEY))
+    setSaved(readItems(SAVED_KEY))
   }, [])
 
-  const saveCart = (updated: BurgerItem[]) => {
-    setCart(updated)
-    localStorage.setItem('cart', JSON.stringify(updated))
-    try { window.dispatchEvent(new Event('cart-changed')) } catch {}
-  }
-  const saveSaved = (updated: BurgerItem[]) => {
-    setSaved(updated)
-    localStorage.setItem('saved', JSON.stringify(updated))
-    try { window.dispatchEvent(new Event('saved-changed')) } catch {}
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    loadFromStorage()
+
+    const handleStorage = (event: StorageEvent) => {
+      if (!event.key || event.key === CART_KEY || event.key === SAVED_KEY) {
+        loadFromStorage()
+      }
+    }
+
+    const handleCartChanged: EventListener = () => loadFromStorage()
+    const handleSavedChanged: EventListener = () => loadFromStorage()
+
+    window.addEventListener('storage', handleStorage)
+    window.addEventListener(CART_EVENT, handleCartChanged)
+    window.addEventListener(SAVED_EVENT, handleSavedChanged)
+
+    return () => {
+      window.removeEventListener('storage', handleStorage)
+      window.removeEventListener(CART_EVENT, handleCartChanged)
+      window.removeEventListener(SAVED_EVENT, handleSavedChanged)
+    }
+  }, [loadFromStorage])
+
+  const persistCart = (next: BurgerItem[]) => {
+    setCart(next)
+    writeItems(CART_KEY, next)
+    dispatchSyncEvent(CART_EVENT)
   }
 
-  const addItem = (item: BurgerItem) => saveCart([...cart, item])
-  const removeItem = (id: string) => saveCart(cart.filter(i => i.id !== id))
-  const updateItem = (id: string, patch: Partial<BurgerItem>) => {
-    const next = cart.map(i => i.id === id ? { ...i, ...patch } : i)
-    saveCart(next)
+  const persistSaved = (next: BurgerItem[]) => {
+    setSaved(next)
+    writeItems(SAVED_KEY, next)
+    dispatchSyncEvent(SAVED_EVENT)
   }
+
+  const addItem = (item: BurgerItem) => persistCart([...cart, item])
+  const removeItem = (id: string) => persistCart(cart.filter(i => i.id !== id))
+  const updateItem = (id: string, patch: Partial<BurgerItem>) =>
+    persistCart(cart.map(i => (i.id === id ? { ...i, ...patch } : i)))
+
   const setItemQuantity = (id: string, qty: number) => {
     const clamped = Math.max(1, Math.floor(qty || 1))
     updateItem(id, { quantity: clamped })
   }
-  const clearCart = () => saveCart([])
+
+  const clearCart = () => persistCart([])
+
   const saveForLater = (id: string) => {
     const item = cart.find(i => i.id === id)
     if (!item) return
-    saveCart(cart.filter(i => i.id !== id))
-    saveSaved([item, ...saved])
+    persistCart(cart.filter(i => i.id !== id))
+    persistSaved([item, ...saved])
   }
+
   const moveToCart = (id: string) => {
     const item = saved.find(i => i.id === id)
     if (!item) return
-    saveSaved(saved.filter(i => i.id !== id))
-    saveCart([item, ...cart])
-  }
-  const removeSaved = (id: string) => saveSaved(saved.filter(i => i.id !== id))
-  const clearSaved = () => saveSaved([])
-  const moveAllSavedToCart = () => {
-    if (!saved.length) return
-    saveCart([...saved, ...cart])
-    saveSaved([])
+    persistSaved(saved.filter(i => i.id !== id))
+    persistCart([item, ...cart])
   }
 
-  return { cart, saved, addItem, removeItem, updateItem, setItemQuantity, saveForLater, moveToCart, removeSaved, clearSaved, moveAllSavedToCart, clearCart }
+  const removeSaved = (id: string) => persistSaved(saved.filter(i => i.id !== id))
+  const clearSaved = () => persistSaved([])
+  const moveAllSavedToCart = () => {
+    if (!saved.length) return
+    persistCart([...saved, ...cart])
+    persistSaved([])
+  }
+
+  return {
+    cart,
+    saved,
+    addItem,
+    removeItem,
+    updateItem,
+    setItemQuantity,
+    saveForLater,
+    moveToCart,
+    removeSaved,
+    clearSaved,
+    moveAllSavedToCart,
+    clearCart,
+  }
 }

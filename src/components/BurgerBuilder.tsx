@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui/card'
@@ -26,6 +26,19 @@ const addons = [
   'Long Hot Peppers', 'Pulled Pork', 'Bacon', 'Truffle Oil'
 ]
 
+const presetMap: Record<string, Partial<{ patty: string; sauce: string; cheese: string; addons: string[] }>> = {
+  'Classic': {},
+  'Classic Cheese': { cheese: 'American' },
+  'The Italian': { addons: ['Long Hot Peppers'] },
+  'The Buffalo Burger': { sauce: 'Hot' },
+  'The Jersey Burger': {},
+  'Spud Burger': { cheese: 'Cheddar' },
+  'BBQ Burger': { sauce: 'BBQ', addons: ['Pulled Pork', 'Caramelized Onions'] },
+  'Three Alarm Burger': { sauce: 'Hot', addons: ['Long Hot Peppers'] },
+  'Vegan Burger': { patty: 'Vegan' },
+  'Blended Burger': { patty: 'Blended' },
+}
+
 export default function BurgerBuilder() {
   const [bun, setBun] = useState(buns[0])
   const [patty, setPatty] = useState(patties[0])
@@ -33,25 +46,15 @@ export default function BurgerBuilder() {
   const [sauce, setSauce] = useState(sauces[0])
   const [selectedAddons, setSelectedAddons] = useState<string[]>([])
   const [checkingOut, setCheckingOut] = useState(false)
-  const burgers = menu.categories.find(c => c.id === 'burgers')?.items ?? []
+  const burgers = useMemo(
+    () => menu.categories.find(c => c.id === 'burgers')?.items ?? [],
+    [menu]
+  )
   const [preset, setPreset] = useState<string | null>(null)
   const [qty, setQty] = useState(1)
   const params = useSearchParams()
 
-  const presetMap: Record<string, Partial<{ patty: string; sauce: string; cheese: string; addons: string[] }>> = {
-    'Classic': {},
-    'Classic Cheese': { cheese: 'American' },
-    'The Italian': { addons: ['Long Hot Peppers'] },
-    'The Buffalo Burger': { sauce: 'Hot' },
-    'The Jersey Burger': {},
-    'Spud Burger': { cheese: 'Cheddar' },
-    'BBQ Burger': { sauce: 'BBQ', addons: ['Pulled Pork', 'Caramelized Onions'] },
-    'Three Alarm Burger': { sauce: 'Hot', addons: ['Long Hot Peppers'] },
-    'Vegan Burger': { patty: 'Vegan' },
-    'Blended Burger': { patty: 'Blended' },
-  }
-
-  function applyPreset(name: string) {
+  const applyPreset = useCallback((name: string) => {
     setPreset(name)
     const p = presetMap[name]
     if (!p) return
@@ -59,7 +62,7 @@ export default function BurgerBuilder() {
     if (p.sauce) setSauce(p.sauce)
     if (p.cheese) setCheese(p.cheese)
     if (p.addons) setSelectedAddons(p.addons)
-  }
+  }, [])
   // Apply deep-linked preset via ?item=<slug>
   useEffect(() => {
     const slug = params?.get('item')
@@ -67,7 +70,7 @@ export default function BurgerBuilder() {
       const found = burgers.find(b => b.slug === slug)
       if (found) applyPreset(found.name)
     }
-  }, [params, burgers])
+  }, [params, burgers, applyPreset])
 
   const toggleAddon = (addon: string) => {
     setSelectedAddons(prev =>
@@ -77,9 +80,14 @@ export default function BurgerBuilder() {
     )
   }
   const { addItem } = useCart()
-  const active = useMemo(() => burgers.find(b => b.name === (preset ?? burgers[0]?.name)) || burgers[0], [preset, burgers])
-  const pricedAddOns = active?.options?.addOns ?? []
-  const unitPrice = useMemo(() => computeUnitPrice(active?.basePrice, selectedAddons, pricedAddOns), [active?.basePrice, selectedAddons, pricedAddOns])
+  const active = useMemo(
+    () => burgers.find(b => b.name === (preset ?? burgers[0]?.name)) || burgers[0],
+    [preset, burgers]
+  )
+  const unitPrice = useMemo(() => {
+    const pricedAddOns = active?.options?.addOns ?? []
+    return computeUnitPrice(active?.basePrice, selectedAddons, pricedAddOns)
+  }, [active, selectedAddons])
   const total = useMemo(() => computeTotal(unitPrice, qty), [unitPrice, qty])
 
   const handleAddToCart = () => {
