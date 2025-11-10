@@ -5,9 +5,8 @@ import type { MenuItem } from "@/data/menu";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useCart } from "@/lib/useCart";
+import { useCart, type BurgerItem } from "@/lib/useCart";
 import { v4 as uuidv4 } from "uuid";
 import { computeUnitPrice, computeTotal, getOptionSets } from "@/lib/pricing";
 
@@ -38,7 +37,7 @@ export default function ItemBuilderModal({ open, onClose, item }: Props) {
       setAddons([]);
       setQty(1);
     }
-  }, [open, data]);
+  }, [open, data, buns, patties, cheeses, sauces]);
 
   const unitPrice = useMemo(
     () => computeUnitPrice(data?.basePrice, addons, pricedAddOns),
@@ -128,7 +127,7 @@ export default function ItemBuilderModal({ open, onClose, item }: Props) {
               <div className="flex items-center gap-2">
                 <Button
                   onClick={() => {
-                    const itemToAdd = { id: uuidv4(), bun, patty, cheese, sauce, addons, quantity: qty, price: unitPrice } as any;
+                    const itemToAdd: BurgerItem = { id: uuidv4(), bun, patty, cheese, sauce, addons, quantity: qty, price: unitPrice };
                     addItem(itemToAdd);
                     onClose();
                   }}
